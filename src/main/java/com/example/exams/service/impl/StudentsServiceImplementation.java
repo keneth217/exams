@@ -24,23 +24,43 @@ public class StudentsServiceImplementation implements StudentsService {
     public StudentsDto addStudent(StudentsDto studentsDto,String createdBy,LocalDateTime createdAt) {
         Students students = StudentMapper.mapToStudent(studentsDto);
 
-        // Check if admission number is already taken.extract admission
-        String admNo = studentsDto.getAdmNo();
+
 
         System.out.println("--------adding student-----------");
-        System.out.println(createdBy);
-        System.out.println(createdAt);
-        System.out.println("--------adding student done-----------");
+        System.out.println("student details:"+studentsDto);
+        System.out.println("created by:" +createdBy);
+        System.out.println("created at:" +createdAt);
+        System.out.println("--------adding student -----------");
+
+        // Check if admission number is already taken.extract admission
+        String admNo = studentsDto.getAdmNo();
+        String name=studentsDto.getStudentName();
+        String tclass= studentsDto.getStudentClass();
+
+        System.out.println("Admission number: " + admNo);
+        System.out.println("Class: " + tclass);
+        System.out.println("Name: " + name);
+
         Optional<Students> existingStudentOptional = studentsRepository.findByAdmNo(admNo);
-        if (existingStudentOptional.isPresent()) {
-            Students existingStudent = existingStudentOptional.get();
-            //declare exist admission
-            String existingAdm =existingStudent.getStudentName();
-            throw new RuntimeException("Admission number " + admNo + " is already taken by " + existingAdm  + ". Please try another admission number.");
+        if (admNo == null) {
+            throw new RuntimeException("Admission number should be provided for all students");
+        }else {
+            if (tclass == null ){  throw new RuntimeException("class should be provided for all students");
+            } else if (name == null) {
+                throw new RuntimeException("Student name should be provided for all students");
+            }else
+
+            if (existingStudentOptional.isPresent()) {
+                Students existingStudent = existingStudentOptional.get();
+                //declare exist admission
+                String existingAdm = existingStudent.getStudentName();
+                throw new RuntimeException("Admission number " + admNo + " is already taken by " + existingAdm + ". Please try another admission number.");
+            }
         }
         students.setCreatedAt(createdAt);
         students.setCreatedBy(createdBy);
         Students savedStudents=studentsRepository.save(students);
+        System.out.println("--------adding student done-----------");
         return StudentMapper.mapToStudentDtos(savedStudents);
     }
 
@@ -83,7 +103,7 @@ public class StudentsServiceImplementation implements StudentsService {
         student.setTermAdmitted(termadmitted);
         student.setPhone(phone);
         student.setTermName(termname);
-        student.setUpdatedBy("keneth");
+        student.setUpdatedBy("keneth korir");
         student.setUpdatedAt(updatedAt);
         Students updatedStudent =studentsRepository.save(student);
         return StudentMapper.mapToStudentDtos(updatedStudent);

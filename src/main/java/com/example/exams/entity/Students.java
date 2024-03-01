@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -26,9 +27,14 @@ public class Students extends BaseEntity {
     private String termAdmitted;
     private String phone;
 
-
-//
-//
-//    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Subjects> subjects = new ArrayList<>();
+//    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    @JoinTable(name="students_subjects",
+//            joinColumns = {
+//            @JoinColumn(name="student_adm",referencedColumnName="adm_no")
+//            },
+//            inverseJoinColumns = {
+//            @JoinColumn(name="subject_code",referencedColumnName="subject_code")
+//            }
+//    )
+//    private Set<Subjects> subjects;
 }

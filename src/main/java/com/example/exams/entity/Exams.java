@@ -15,19 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Exams {
+public class Exams  extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String examName;
     private String  termName;
     private int totalMarks;
-
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "student_id")
-//    private Students student;
-//
-//    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Subjects> subjectMarks = new ArrayList<>();
 }

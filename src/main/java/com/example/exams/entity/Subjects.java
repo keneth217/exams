@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Subjects {
+public class Subjects  extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,12 +24,8 @@ public class Subjects {
     private int totalScore;
     private int outOf;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "student_id")
-//    private Students student;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "exam_id")
-//    private Exams exam;
+    public Subjects(Long id, String subjectAlias, String subjectName, String subjectCategory, int outOf, int totalScore) {
+    }
+
 
 }

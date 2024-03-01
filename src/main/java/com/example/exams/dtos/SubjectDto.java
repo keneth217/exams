@@ -1,7 +1,9 @@
 package com.example.exams.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+
+import lombok.*;
+
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -13,4 +15,8 @@ public class SubjectDto {
     private String subjectAlias;
     private int totalScore;
     private int outOf;
+
+    public SubjectDto(Long id, String subjectAlias, String subjectName, String subjectCategory, int subjectCode, int outOf, int totalScore) {
+    }
+//    private Set<Students> students;
 }

@@ -1,38 +1,30 @@
 package com.example.exams.mapper;
 
-import com.example.exams.dtos.StudentsDto;
+
 import com.example.exams.dtos.SubjectDto;
-import com.example.exams.entity.Students;
+
 import com.example.exams.entity.Subjects;
-import java.util.stream.Collectors;
+import org.modelmapper.ModelMapper;
+
 
 public class SubjectMapper {
+    private static ModelMapper modelMapper = new ModelMapper();
+
+    public SubjectMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
+
     //map dto to entity
     public static Subjects mapToSubject(SubjectDto subjectDto){
 
-        Subjects subjects=new Subjects(
-                subjectDto.getId(),
-                subjectDto.getSubjectAlias(),
-                subjectDto.getSubjectName(),
-                subjectDto.getSubjectCategory(),
-                subjectDto.getOutOf(),
-                subjectDto.getTotalScore()
-        );
+        Subjects subjects=new Subjects();
+        subjects= modelMapper.map(subjectDto,Subjects.class);
         return subjects;
     }
     //map entity to dto
     public static SubjectDto mapToSubjectsDtos(Subjects subjects){
-        SubjectDto subjectDto = new SubjectDto(
-               subjects.getId(),
-                subjects.getSubjectAlias(),
-                subjects.getSubjectName(),
-                subjects.getSubjectCategory(),
-                subjects.getSubjectCode(),
-                subjects.getOutOf(),
-                subjects.getTotalScore()
-
-
-        );
+        SubjectDto subjectDto = new SubjectDto();
+        subjectDto=modelMapper.map(subjects,SubjectDto.class);
         return subjectDto;
     }
 }

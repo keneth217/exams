@@ -10,5 +10,10 @@ public class ExamDto {
     private Long id;
     private String examName;
     private String  termName;
+
     private int totalMarks;
+
+    public ExamDto() {
+
+    }
 }

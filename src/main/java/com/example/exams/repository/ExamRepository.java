@@ -4,4 +4,5 @@ import com.example.exams.entity.Exams;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ExamRepository extends JpaRepository<Exams,Long> {
+    boolean existsByExamNameAndTermName(String examName, String termName);
 }

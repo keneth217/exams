@@ -119,8 +119,26 @@ public class StudentsServiceImplementation implements StudentsService {
 
     @Override
     public List<StudentsDto> getAllStudents() {
-        List<Students>  students=studentsRepository.findAll();
+        List<Students>  students=studentsRepository.findAllByOrderByAdmNoAsc();
+        System.out.println("---------------ordering by asc___________-");
         return  students.stream().map((Students) -> StudentMapper.mapToStudentDtos(Students))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * @param query
+     * @return
+     */
+    @Override
+    public List<StudentsDto> searchStudents(String query) {
+        List<Students> students = studentsRepository.searchStudent(query);
+        System.out.println("params:"+query);
+        if (students.isEmpty()) {
+            throw new RuntimeException("No students found");
+//            throw new RuntimeException("No students found with the given query: " + query);
+        }
+        return students.stream()
+                .map(student -> StudentMapper.mapToStudentDtos(student))
                 .collect(Collectors.toList());
     }
 

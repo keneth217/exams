@@ -30,4 +30,6 @@ public interface StudentsService {
 
     StudentsDto deleteStudent(String admNo);
     List<StudentsDto> getAllStudents();
+
+    List<StudentsDto> searchStudents(String query);
 }

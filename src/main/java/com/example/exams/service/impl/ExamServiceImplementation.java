@@ -25,10 +25,25 @@ public class ExamServiceImplementation implements ExamService {
      */
     @Override
     public ExamDto addExam(ExamDto examDto, String createdBy, LocalDateTime createdAt) {
-        Exams exams= ExamMapper.mapToExams(examDto);
-        exams.setCreatedAt(createdAt);
+        Exams exams= ExamMapper.mapDtoToEntity(examDto);
+
+        // Set the totalMarks attribute from the ExamDto
+        exams.setTotalMarks(examDto.getTotalMarks());
+       String ex=examDto.getExamName();
+
+        String ter= examDto.getTermName();
+        int total=examDto.getTotalMarks();
+        System.out.println("total marks:" +total);
+        if (examRepository.existsByExamNameAndTermName(examDto.getExamName(), examDto.getTermName())) {
+            throw new RuntimeException("Exam  with name " +ex+ "and termname " +ter+" already exists");
+
+        } else {
+            if (total > 100)
+                throw new RuntimeException("total marks  should be less than 100");
+            exams.setCreatedAt(createdAt);
         exams.setCreatedBy(createdBy);
         Exams savedExam=examRepository.save(exams);
-        return ExamMapper.mapToExamDto(savedExam);
+        return ExamMapper.mapEntityToDto(savedExam);
+        }
     }
 }

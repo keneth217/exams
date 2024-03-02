@@ -1,12 +1,14 @@
 package com.example.exams.dtos;
 
 
+import com.example.exams.entity.Students;
 import lombok.*;
 
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class SubjectDto {
     private Long id;
     private int subjectCode;
@@ -15,8 +17,7 @@ public class SubjectDto {
     private String subjectAlias;
     private int totalScore;
     private int outOf;
+    private Set<Students> student;
 
-    public SubjectDto(Long id, String subjectAlias, String subjectName, String subjectCategory, int subjectCode, int outOf, int totalScore) {
-    }
 //    private Set<Students> students;
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter
@@ -17,6 +18,7 @@ public class Subjects  extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "subject_code")
     private int subjectCode;
     private String subjectName;
     private String  subjectCategory;
@@ -24,8 +26,9 @@ public class Subjects  extends BaseEntity {
     private int totalScore;
     private int outOf;
 
-    public Subjects(Long id, String subjectAlias, String subjectName, String subjectCategory, int outOf, int totalScore) {
-    }
+
+@ManyToMany(mappedBy = "subjects",fetch = FetchType.LAZY)
+    private Set<Students> student;
 
 
 }

@@ -2,6 +2,7 @@ package com.example.exams.service.impl;
 
 import com.example.exams.dtos.StudentsDto;
 import com.example.exams.entity.Students;
+import com.example.exams.exceptions.ResourceNotFoundExceptions;
 import com.example.exams.mapper.StudentMapper;
 import com.example.exams.repository.StudentsRepository;
 import com.example.exams.service.StudentsService;
@@ -43,18 +44,18 @@ public class StudentsServiceImplementation implements StudentsService {
 
         Optional<Students> existingStudentOptional = studentsRepository.findByAdmNo(admNo);
         if (admNo == null) {
-            throw new RuntimeException("Admission number should be provided for all students");
+            throw new ResourceNotFoundExceptions("Admission number should be provided for all students");
         }else {
-            if (tclass == null ){  throw new RuntimeException("class should be provided for all students");
+            if (tclass == null ){  throw new ResourceNotFoundExceptions("class should be provided for all students");
             } else if (name == null) {
-                throw new RuntimeException("Student name should be provided for all students");
+                throw new ResourceNotFoundExceptions("Student name should be provided for all students");
             }else
 
             if (existingStudentOptional.isPresent()) {
                 Students existingStudent = existingStudentOptional.get();
                 //declare exist admission
                 String existingAdm = existingStudent.getStudentName();
-                throw new RuntimeException("Admission number " + admNo + " is already taken by " + existingAdm + ". Please try another admission number.");
+                throw new ResourceNotFoundExceptions("Admission number " + admNo + " is already taken by " + existingAdm + ". Please try another admission number.");
             }
         }
         students.setCreatedAt(createdAt);
@@ -67,7 +68,8 @@ public class StudentsServiceImplementation implements StudentsService {
     @Override
     public StudentsDto getStudentByAdm(String admNo) {
         Optional<Students> studentOptional = studentsRepository.findByAdmNo(admNo);
-        Students student = studentOptional.orElseThrow(() -> new RuntimeException("Student with admission number " + admNo + " not found"));
+        Students student = studentOptional.orElseThrow(() ->
+                new ResourceNotFoundExceptions("Student with admission number " + admNo + " not found"));
         return StudentMapper.mapToStudentDtos(student);
     }
 
@@ -77,44 +79,32 @@ public class StudentsServiceImplementation implements StudentsService {
 //    }
 
     @Override
-    public StudentsDto updateStudent(
-            String admNo,
-            String name,
-            String phone,
-            String studentClass,
-            String gender,
-            String termname,
-            String termadmitted,
-            LocalDateTime updatedAt
-//            String updatedBY="keneth",
-//            LocalDateTime updatedAt = LocalDateTime.now();
-
-    ) {
-
+    public StudentsDto updateStudent(String admNo, StudentsDto updateSt1) {
+        LocalDateTime updatedAt=LocalDateTime.now();
         Optional<Students> studentOptional = studentsRepository.findByAdmNo(admNo);
         Students student = studentOptional.orElseThrow(() ->
                 new RuntimeException("Student with admission number " + admNo + " not found"));
         if (!admNo.equals(student.getAdmNo())) {
             throw new IllegalArgumentException("Admission number cannot be updated");
         }
-        student.setStudentName(name);
-        student.setStudentClass(studentClass);
-        student.setGender(gender);
-        student.setTermAdmitted(termadmitted);
-        student.setPhone(phone);
-        student.setTermName(termname);
+        student.setStudentName(updateSt1.getStudentName());
+        student.setStudentClass(updateSt1.getStudentClass());
+        student.setGender(updateSt1.getGender());
+        student.setTermAdmitted(updateSt1.getTermAdmitted());
+        student.setPhone(updateSt1.getPhone());
+        student.setTermName(updateSt1.getTermName());
         student.setUpdatedBy("keneth korir");
         student.setUpdatedAt(updatedAt);
         Students updatedStudent =studentsRepository.save(student);
         return StudentMapper.mapToStudentDtos(updatedStudent);
     }
+    //   void does not return anything
     @Override
-    public StudentsDto deleteStudent(String admNo) {
+    public void  deleteStudent(String admNo) {
         Optional<Students> studentOptional = studentsRepository.findByAdmNo(admNo);
         Students student = studentOptional.orElseThrow(() ->
                 new RuntimeException("Student with admission number " + admNo + " not found"));
         studentsRepository.delete(student);
-        return StudentMapper.mapToStudentDtos(student);
     }
 
     @Override

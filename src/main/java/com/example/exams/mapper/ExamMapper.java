@@ -28,7 +28,7 @@ public class ExamMapper {
 //        );
 //        return exams;
 //    }
-    public static final Exams  mapDtoToEntity(ExamDto examDto){
+    public static Exams  mapDtoToEntity(ExamDto examDto){
 
         Exams exams=new Exams();
         exams = modelMapper.map(examDto,Exams.class);
@@ -45,7 +45,7 @@ public class ExamMapper {
 //        );
 //        return examDto;
 //    }
-    public static final ExamDto mapEntityToDto(Exams exams){
+    public static ExamDto mapEntityToDto(Exams exams){
         ExamDto examDto=new ExamDto();
         examDto= modelMapper.map(exams,ExamDto.class);
         return examDto;

@@ -1,11 +1,18 @@
 package com.example.exams.exceptions;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value= HttpStatus.NOT_FOUND)
+@Getter
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ResourceNotFoundExceptions extends RuntimeException {
-    public ResourceNotFoundExceptions(String message){
+
+    private final int status;
+
+    public ResourceNotFoundExceptions(String message, int status) {
         super(message);
+        this.status = status;
     }
+
 }

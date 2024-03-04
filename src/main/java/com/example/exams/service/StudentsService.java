@@ -14,21 +14,9 @@ public interface StudentsService {
 
 //    StudentsDto updateStudent(String admNo);
 
-    StudentsDto updateStudent(
-            String admNo,
-            String name,
-            String phone,
-            String studentClass,
-            String gender,
-            String termname,
-            String termadmitted,
-            LocalDateTime updatedAt
-//            String updatedBY="keneth",
-//            LocalDateTime updatedAt = LocalDateTime.now();
+    StudentsDto updateStudent( String admNo,StudentsDto updateSt1);
 
-    );
-
-    StudentsDto deleteStudent(String admNo);
+    void deleteStudent(String admNo);
     List<StudentsDto> getAllStudents();
 
     List<StudentsDto> searchStudents(String query);

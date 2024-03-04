@@ -19,6 +19,7 @@ public class Classes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String className;
+    private String currentClass;
+    private String nextClass;
     private int population;
 }

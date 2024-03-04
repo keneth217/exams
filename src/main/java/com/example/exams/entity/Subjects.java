@@ -1,5 +1,6 @@
 package com.example.exams.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,8 +26,7 @@ public class Subjects  extends BaseEntity {
     private String subjectAlias;
     private int totalScore;
     private int outOf;
-
-
+@JsonIgnore
 @ManyToMany(mappedBy = "subjects",fetch = FetchType.LAZY)
     private Set<Students> student;
 

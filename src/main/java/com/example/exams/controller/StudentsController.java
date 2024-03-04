@@ -27,7 +27,7 @@ public class StudentsController {
         LocalDateTime createdAt = LocalDateTime.now();
         String createdBy="keneth";
         return new ResponseEntity<>(studentsService.addStudent(studentsDto, createdBy,createdAt
-        ), HttpStatus.CREATED);
+        ), HttpStatus.OK);
     }
     @GetMapping("/all")
     public ResponseEntity<List<StudentsDto>> getAllStudents(){
@@ -49,16 +49,7 @@ public class StudentsController {
         System.out.println(admNo);
         System.out.println("--------done-----------");
         System.out.println(studentsDto.getStudentName());
-        StudentsDto updatedStudentDto = studentsService.updateStudent(
-                admNo,
-                studentsDto.getStudentName(),
-                studentsDto.getPhone(),
-                studentsDto.getStudentClass(),
-                studentsDto.getGender(),
-                studentsDto.getTermName(),
-                studentsDto.getTermAdmitted(),
-                updatedAt
-        );
+        StudentsDto updatedStudentDto = studentsService.updateStudent(admNo, studentsDto);
         Response response=new Response();
         response.setCode("200");
         response.setMessage("student  with admno "+" "+admNo+" "+"updated successfully");
@@ -66,12 +57,14 @@ public class StudentsController {
                 .status(HttpStatus.OK)
                 .body(response);
     }
+
+ //   void does not return anything
     @DeleteMapping("/{admNo}/delete")
     public ResponseEntity<Response> deleteStudentById(@PathVariable String admNo){
-      StudentsDto students= studentsService.deleteStudent(admNo);
+       studentsService.deleteStudent(admNo);
       Response response=new Response();
       response.setCode("200");
-      response.setMessage("student with adm no"+students.getAdmNo()+" deleted successfully");
+      response.setMessage("student with adm no"+admNo+" deleted successfully");
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(response);

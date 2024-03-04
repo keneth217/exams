@@ -2,6 +2,7 @@ package com.example.exams.service.impl;
 
 import com.example.exams.dtos.ExamDto;
 import com.example.exams.entity.Exams;
+import com.example.exams.exceptions.ResourceNotFoundExceptions;
 import com.example.exams.mapper.ExamMapper;
 import com.example.exams.repository.ExamRepository;
 import com.example.exams.service.ExamService;
@@ -35,11 +36,11 @@ public class ExamServiceImplementation implements ExamService {
         int total=examDto.getTotalMarks();
         System.out.println("total marks:" +total);
         if (examRepository.existsByExamNameAndTermName(examDto.getExamName(), examDto.getTermName())) {
-            throw new RuntimeException("Exam  with name " +ex+ "and termname " +ter+" already exists");
+            throw new ResourceNotFoundExceptions("Exam  with name " +ex+ "and termname " +ter+" already exists",200);
 
         } else {
             if (total > 100)
-                throw new RuntimeException("total marks  should be less than 100");
+                throw new ResourceNotFoundExceptions("total marks  should be less than 100",200);
             exams.setCreatedAt(createdAt);
         exams.setCreatedBy(createdBy);
         Exams savedExam=examRepository.save(exams);

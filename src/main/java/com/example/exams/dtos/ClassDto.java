@@ -7,6 +7,7 @@ import lombok.Data;
 public class ClassDto {
 
     private Long id;
-    private String className;
+    private String currentClass;
+    private String nextClass;
     private int population;
 }

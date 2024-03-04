@@ -44,18 +44,19 @@ public class StudentsServiceImplementation implements StudentsService {
 
         Optional<Students> existingStudentOptional = studentsRepository.findByAdmNo(admNo);
         if (admNo == null) {
-            throw new ResourceNotFoundExceptions("Admission number should be provided for all students");
+            throw new ResourceNotFoundExceptions("Admission number should be provided for all students",404);
         }else {
-            if (tclass == null ){  throw new ResourceNotFoundExceptions("class should be provided for all students");
+            if (tclass == null ){  throw new ResourceNotFoundExceptions("class should be provided for all students",404);
             } else if (name == null) {
-                throw new ResourceNotFoundExceptions("Student name should be provided for all students");
+                throw new ResourceNotFoundExceptions("Student name should be provided for all students",404);
             }else
 
             if (existingStudentOptional.isPresent()) {
                 Students existingStudent = existingStudentOptional.get();
                 //declare exist admission
                 String existingAdm = existingStudent.getStudentName();
-                throw new ResourceNotFoundExceptions("Admission number " + admNo + " is already taken by " + existingAdm + ". Please try another admission number.");
+                throw new ResourceNotFoundExceptions("Admission number " + admNo + " is already taken by "
+                        + existingAdm + ". Please try another admission number.",404);
             }
         }
         students.setCreatedAt(createdAt);
@@ -69,7 +70,7 @@ public class StudentsServiceImplementation implements StudentsService {
     public StudentsDto getStudentByAdm(String admNo) {
         Optional<Students> studentOptional = studentsRepository.findByAdmNo(admNo);
         Students student = studentOptional.orElseThrow(() ->
-                new ResourceNotFoundExceptions("Student with admission number " + admNo + " not found"));
+                new ResourceNotFoundExceptions("Student with admission number " + admNo + " not found",404));
         return StudentMapper.mapToStudentDtos(student);
     }
 
@@ -83,9 +84,9 @@ public class StudentsServiceImplementation implements StudentsService {
         LocalDateTime updatedAt=LocalDateTime.now();
         Optional<Students> studentOptional = studentsRepository.findByAdmNo(admNo);
         Students student = studentOptional.orElseThrow(() ->
-                new RuntimeException("Student with admission number " + admNo + " not found"));
+                new ResourceNotFoundExceptions("Student with admission number " + admNo + " not found",404));
         if (!admNo.equals(student.getAdmNo())) {
-            throw new IllegalArgumentException("Admission number cannot be updated");
+            throw new ResourceNotFoundExceptions("Admission number cannot be updated",404);
         }
         student.setStudentName(updateSt1.getStudentName());
         student.setStudentClass(updateSt1.getStudentClass());
@@ -103,7 +104,7 @@ public class StudentsServiceImplementation implements StudentsService {
     public void  deleteStudent(String admNo) {
         Optional<Students> studentOptional = studentsRepository.findByAdmNo(admNo);
         Students student = studentOptional.orElseThrow(() ->
-                new RuntimeException("Student with admission number " + admNo + " not found"));
+                new ResourceNotFoundExceptions("Student with admission number " + admNo + " not found",404));
         studentsRepository.delete(student);
     }
 

@@ -1,9 +1,6 @@
 package com.example.exams.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,4 +23,8 @@ public class Marks extends BaseEntity {
     private String actualScore;
     private String grade;
     private String termName;
+//    @OneToOne
+////    @JoinColumn(name = "student_adm",referencedColumnName = "adm_no")
+//    @JoinColumn(name = "student_adm")
+//    private Students studentAdm;
 }

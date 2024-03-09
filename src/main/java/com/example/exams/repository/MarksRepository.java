@@ -9,7 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface MarksRepository extends JpaRepository<Marks,Long> {
-    Optional<Marks> findByAdmNo(String admNo);
-    boolean existsByAdmNoAndSubjectCode(String admNo, String SubjectCode);
-    Marks findByAdmNoAndSubjectCode(String admNo, String subjectCode);
+
+    Optional<Marks> findByAdmNo(String AdmNo);
+//    boolean existsByAdmNoAndSubjectCode(String student_adm, String SubjectCode);
+//    Marks findByAdmNoAndSubjectCode(String student_adm, String subjectCode);
 }

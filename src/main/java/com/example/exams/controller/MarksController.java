@@ -6,7 +6,6 @@ import com.example.exams.dtos.Response;
 import com.example.exams.service.MarkService;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,18 +30,18 @@ public class MarksController {
         return new ResponseEntity<>(markService.enterMarks(markDto,grade,createdBy,createdAt), HttpStatus.OK);
 
     }
-   @PutMapping("/{admNo}/{subjectCode}/{teacherCode}/{studentClass}/update")
-//    @PutMapping("/{admNo}/update")
-    public ResponseEntity<Response> updateMark(@PathVariable   String admNo,
-                                               @PathVariable   String subjectCode,
-                                               @PathVariable  String studentClass,
-                                               @PathVariable       String teacherCode,
+//   @PutMapping("/{studentAdmNo}/{subjectCode}/{teacherCode}/{studentClass}/update")
+@PutMapping("/{AdmNo}/update")
+    public ResponseEntity<Response> updateMark(@PathVariable   String  AdmNo,
+                                                String subjectCode,
+                                              String studentClass,
+                                                 String teacherCode,
                                                String termName,
                                                @RequestBody MarkDto updateMark){
-        markService.updateMark(admNo,subjectCode,studentClass,teacherCode,termName,updateMark);
+        markService.updateMark( AdmNo,subjectCode,studentClass,teacherCode,termName,updateMark);
         Response response=new Response();
         response.setCode("200");
-        response.setMessage("student marks with admno "+" "+admNo+" "+"updated successfully");
+        response.setMessage("student marks with adm no "+" "+ AdmNo+" "+"updated successfully");
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(response);

@@ -5,6 +5,7 @@ import com.example.exams.entity.Marks;
 import com.example.exams.exceptions.ResourceNotFoundExceptions;
 import com.example.exams.mapper.MarkMapper;
 import com.example.exams.repository.MarksRepository;
+import com.example.exams.repository.StudentsRepository;
 import com.example.exams.service.MarkService;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,12 @@ import java.util.Optional;
 @Service
 public class MarkServiceImplementation  implements MarkService {
     private  final MarksRepository marksRepository;
+//    private final StudentsRepository studentsRepository;
 
-    public MarkServiceImplementation( MarksRepository marksRepository) {
+    public MarkServiceImplementation(MarksRepository marksRepository, StudentsRepository studentsRepository) {
         this.marksRepository = marksRepository;
-;
+//        this.studentsRepository = studentsRepository;
+
     }
 
     /**
@@ -78,7 +81,7 @@ public class MarkServiceImplementation  implements MarkService {
     }
 
     /**
-     * @param admNo
+     * @param AdmNo
      * @param subjectCode
      * @param studentClass
      * @param teacherCode
@@ -87,13 +90,13 @@ public class MarkServiceImplementation  implements MarkService {
      * @return
      */
     @Override
-    public MarkDto updateMark(String admNo, String subjectCode, String studentClass, String teacherCode, String termName, MarkDto updateMark) {
+    public MarkDto updateMark(String AdmNo, String subjectCode, String studentClass, String teacherCode, String termName, MarkDto updateMark) {
         LocalDateTime updatedAt = LocalDateTime.now();
-
+//        Marks marks= MarkMapper.convertToEntity(updateMark);
         // Retrieve the marks entity from the database
-        Optional<Marks> markOptional = marksRepository.findByAdmNo(admNo);
-        Marks marks = markOptional.orElseThrow(() ->
-                new ResourceNotFoundExceptions("Student with admission number " + admNo + " not found",404));
+        Optional<Marks> markOptional = marksRepository.findByAdmNo(AdmNo);
+     Marks marks = markOptional.orElseThrow(() ->
+                new ResourceNotFoundExceptions("Student with admission number " + AdmNo + " not found",404));
 
         // Validate updateMark and existing marks data
         String actualScore = updateMark.getActualScore();

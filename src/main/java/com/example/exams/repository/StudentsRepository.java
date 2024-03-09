@@ -1,5 +1,6 @@
 package com.example.exams.repository;
 
+import com.example.exams.dtos.StudentsDto;
 import com.example.exams.entity.Students;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +15,8 @@ public interface StudentsRepository extends JpaRepository<Students,Long> {
     Optional<Students> deleteByAdmNo(String admNo);
 
     List<Students> findAllByOrderByAdmNoAsc();
+    @Query("SELECT NEW com.example.exams.dtos.StudentsDto(COUNT(s)) FROM Students s")
+    List<StudentsDto> totalStudentsCount();
 
     //JPQL QUERY-use class name
     @Query("SELECT s FROM Students s WHERE " +

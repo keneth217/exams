@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 
 public interface MarkService {
     MarkDto  enterMarks(MarkDto markDto ,String grade, String createdBy, LocalDateTime createdAt);
-  MarkDto updateMark(String admNo,String subjectCode,String studentClass,String teacherCode,String termName ,MarkDto updateMark);
+
+    MarkDto updateMark(String studentAdmNo, String subjectCode, String studentClass, String teacherCode, String termName, MarkDto updateMark);
+
 
 
 }

@@ -74,10 +74,7 @@ public class StudentsServiceImplementation implements StudentsService {
         return StudentMapper.mapToStudentDtos(student);
     }
 
-//    @Override
-//    public StudentsDto updateStudent(String admNo) {
-//        return null;
-//    }
+
 
     @Override
     public StudentsDto updateStudent(String admNo, StudentsDto updateSt1) {

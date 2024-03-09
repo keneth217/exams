@@ -1,6 +1,7 @@
 package com.example.exams.dtos;
 
 import com.example.exams.entity.Subjects;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ public class StudentsDto {
     private  String termName;
     private String termAdmitted;
     private String phone;
-    private Set<Subjects> subjects;
+//    private Set<Subjects> subjects;
 //    private Set<Subjects> subjects;
 
 }

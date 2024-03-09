@@ -26,9 +26,15 @@ public class Subjects  extends BaseEntity {
     private String subjectAlias;
     private int totalScore;
     private int outOf;
-@JsonIgnore
-@ManyToMany(mappedBy = "subjects",fetch = FetchType.LAZY)
-    private Set<Students> student;
+
+    @ManyToOne
+    private Classes aClass;
+
+    @ManyToMany(mappedBy = "subjects")
+    private Set<Teachers> teachers = new HashSet<>();
+//    @JsonIgnore
+//    @OneToMany(fetch = FetchType.LAZY)
+//    private Set<Classes> classes;
 
 
 }

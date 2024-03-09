@@ -1,6 +1,7 @@
 package com.example.exams.service;
 
 import com.example.exams.dtos.StudentsDto;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,6 @@ public interface StudentsService {
 //    StudentsDto addStudent(StudentsDto studentsDto);
     StudentsDto getStudentByAdm(String admNo);
 
-//    StudentsDto updateStudent(String admNo);
 
     StudentsDto updateStudent( String admNo,StudentsDto updateSt1);
 

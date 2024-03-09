@@ -6,10 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 @Setter
 @Getter
 @NoArgsConstructor
@@ -21,5 +17,5 @@ public class Exams  extends BaseEntity {
     private Long id;
     private String examName;
     private String  termName;
-    private int totalMarks;
+  private int totalMarks;
 }

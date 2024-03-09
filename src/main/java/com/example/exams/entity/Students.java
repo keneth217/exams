@@ -29,15 +29,18 @@ public class Students extends BaseEntity {
     private  String termName;
     private String termAdmitted;
     private String phone;
-@JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinTable(name="students_subjects",
-            joinColumns = {
-            @JoinColumn(name="student_adm",referencedColumnName="adm_no")
-            },
-            inverseJoinColumns = {
-            @JoinColumn(name="subject_code",referencedColumnName="subject_code")
-            }
-    )
-    private Set<Subjects> subjects;
+
+
+//@JsonIgnore
+//    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    @JoinTable(name="students_subjects",
+//            joinColumns = {
+//            @JoinColumn(name="student_adm",referencedColumnName="adm_no")
+//            },
+//            inverseJoinColumns = {
+//            @JoinColumn(name="subject_code",referencedColumnName="subject_code")
+//            }
+//    )
+//    private Set<Subjects> subjects;
+
 }

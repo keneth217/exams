@@ -1,5 +1,6 @@
 package com.example.exams.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +22,7 @@ public class Teachers  extends BaseEntity{
     private String tCode;
     private String tName;
     private String tphone;
-
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name="teacher_subjects",
             joinColumns =   @JoinColumn(name="teacher_id",referencedColumnName = "id"),

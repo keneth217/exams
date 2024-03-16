@@ -1,7 +1,5 @@
 package com.example.exams.service.impl;
 
-import com.example.exams.dtos.ClassDto;
-import com.example.exams.dtos.SubjectDto;
 import com.example.exams.dtos.TeacherDto;
 import com.example.exams.entity.Classes;
 import com.example.exams.entity.Subjects;
@@ -15,6 +13,7 @@ import com.example.exams.service.TeacherService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -61,12 +60,11 @@ public class TeacherServiceImplementatiom implements TeacherService {
 //    A subject can belong to only one class through a many-to-one relationship.
 //    A class can have multiple subjects through a one-to-many relationship.
     @Override
-    public TeacherDto assignSubjectToTeacher(Long teacherId, Long subjectId, Long classId) {
+    public TeacherDto assignSubjectToTeacher(Long teacherId, Long subjectId, Set<Long> classIds) {
         LocalDateTime updatedAt = LocalDateTime.now();
 
         Optional<Teachers> optionalTeacher = teacherRepository.findById(teacherId);
         Optional<Subjects> optionalSubject = subjectsRepository.findById(subjectId);
-        Optional<Classes> optionalClass = classesRepository.findById(classId);
 
         Teachers teacher = optionalTeacher.orElseThrow(() ->
                 new ResourceNotFoundExceptions("Teacher with ID " + teacherId + " not found", 404));
@@ -74,16 +72,13 @@ public class TeacherServiceImplementatiom implements TeacherService {
         Subjects subject = optionalSubject.orElseThrow(() ->
                 new ResourceNotFoundExceptions("Subject with ID " + subjectId + " not found", 404));
 
-        Classes classes = optionalClass.orElseThrow(() ->
-                new ResourceNotFoundExceptions("Class with ID " + classId + " not found", 404));
-
-        // Check if the teacher is already assigned to the subject in the class
+        // Check if the teacher is already assigned to the subject in any of the classes
         boolean isAssigned = teacher.getSubjects().stream()
-                .anyMatch(s -> s.getId().equals(subjectId) && s.getAClass().getId().equals(classId));
+                .anyMatch(s -> s.getId().equals(subjectId) && classIds.contains(s.getAClass().getId()));
 
         if (isAssigned) {
             throw new ResourceNotFoundExceptions("Teacher with ID " + teacherId +
-                    " is already assigned to subject with ID " + subjectId + " in class with ID " + classId,404);
+                    " is already assigned to subject with ID " + subjectId + " in one of the provided classes",404);
         }
 
         // Assign subject to teacher
@@ -91,17 +86,24 @@ public class TeacherServiceImplementatiom implements TeacherService {
         subjects.add(subject);
         teacher.setSubjects(subjects);
 
-        subject.setTeachers(Set.of(teacher));
-        subject.setAClass(classes);
+        // Assign classes to subject
+        Set<Classes> classesSet = new HashSet<>();
+        for (Long classId : classIds) {
+            Optional<Classes> optionalClass = classesRepository.findById(classId);
+            Classes classes = optionalClass.orElseThrow(() ->
+                    new ResourceNotFoundExceptions("Class with ID " + classId + " not found", 404));
+            classesSet.add(classes);
+        }
+        subject.setAClass((Classes) classesSet);
 
+        // Update teacher
         teacher.setUpdatedAt(updatedAt);
-
-        // Save the updated teacher and subject
         teacherRepository.save(teacher);
-        subjectsRepository.save(subject);
 
         return TeacherMapper.mapToTeacherDto(teacher);
     }
+
+
 
 
     /**

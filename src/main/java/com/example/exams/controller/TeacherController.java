@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("api/teachers")
@@ -25,11 +26,11 @@ public class TeacherController {
         String createdBy="keneth";
         return new ResponseEntity<>(teacherService.addTeacher(teacherDto,createdBy,createdAt), HttpStatus.CREATED);
     }
-    @PutMapping("{teacherId}/assign/{subjectId}/{classId}")
+    @PostMapping("{teacherId}/assign/{subjectId}/{classId}")
     public ResponseEntity<TeacherDto> assignSubject(@PathVariable Long teacherId,
                                                     @PathVariable Long subjectId,
                                                     @PathVariable Long classId) {
-        TeacherDto assignedTeacher = teacherService.assignSubjectToTeacher(teacherId, subjectId, classId);
+        TeacherDto assignedTeacher = teacherService.assignSubjectToTeacher(teacherId, subjectId, Collections.singleton(classId));
         return ResponseEntity.ok(assignedTeacher);
     }
 

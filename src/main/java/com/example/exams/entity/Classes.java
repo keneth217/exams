@@ -1,5 +1,6 @@
 package com.example.exams.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,8 @@ public class Classes extends BaseEntity {
     private String currentClass;
     private String nextClass;
     private int population;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "aClass")
     private Set<Subjects> subjects = new HashSet<>();
 }

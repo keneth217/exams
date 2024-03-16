@@ -27,14 +27,21 @@ public class Subjects  extends BaseEntity {
     private int totalScore;
     private int outOf;
 
-    @ManyToOne
-    private Classes aClass;
 
+
+//    @OneToMany(mappedBy = "subjects")
+//    private Set<Classes> aClass = new HashSet<>();
+//
+//    @ManyToMany(mappedBy = "subjects")
+//    private Set<Teachers> teachers = new HashSet<>();
+
+@ManyToOne
+@JoinColumn(name = "class_id")
+private Classes aClass;
+@JsonIgnore
     @ManyToMany(mappedBy = "subjects")
     private Set<Teachers> teachers = new HashSet<>();
-//    @JsonIgnore
-//    @OneToMany(fetch = FetchType.LAZY)
-//    private Set<Classes> classes;
+
 
 
 }
